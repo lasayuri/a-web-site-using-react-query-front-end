@@ -9,8 +9,12 @@ const Categoria = () => {
     const params = useParams();
 
     //o segundo parametro do useQuery seria o equivalente ao array de dependencias do useEffect
-    const { data: categoria, isLoading } = useQuery(['categoriaPorSlug', params.slug], () => obterCategoriaPorSlug(params.slug || ''));
+    const { data: categoria, isLoading, error } = useQuery(['categoriaPorSlug', params.slug], () => obterCategoriaPorSlug(params.slug || ''));
 
+    if (error) {
+        console.log('Alguma coisa deu errado');
+        return <h1>Ops! Algum erro inesperado aconteceu</h1>
+    }
     // useEffect(() => {
     //     setEstaCarregando(true);
     //     http.get<ICategoria[]>('categorias', {
